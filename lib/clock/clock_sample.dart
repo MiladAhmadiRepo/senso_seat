@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:senso_seat/lib/top_bar.dart';
-import 'clock_second_sample.dart';
+import 'package:senso_seat/lib/widgets/top_bar.dart';
+import 'package:lottie/lottie.dart';
 
 class ClockSample extends StatelessWidget {
   @override
@@ -39,46 +39,15 @@ class _ClockFirstPageState extends State<_ClockFirstPage> {
         children: <Widget>[
           Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 9.0),
-            child: TopBar(actions: [],title: "",),
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.0),
-            child: Stack(
-              children: <Widget>[
-
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Neumorphic(
-                    style: NeumorphicStyle(
-                      depth: 20,
-                      intensity: 0.4,
-                      boxShape: NeumorphicBoxShape.roundRect(
-                          BorderRadius.circular(8)),
-                    ),
-                    child: NeumorphicButton(
-                      padding: EdgeInsets.all(12.0),
-                      child: Icon(
-                        Icons.add,
-                        color: Color(0xFFC1CDE5),
-                      ),
-                      onPressed: () {
-                        // Navigator.of(context)
-                        //     .push(MaterialPageRoute(builder: (context) {
-                        //   return ClockAlarmPage();
-                        // }));
-                      },
-                      style: NeumorphicStyle(
-                          depth: -1,
-                          boxShape: NeumorphicBoxShape.roundRect(
-                              BorderRadius.circular(8))),
-                    ),
-                  ),
-                ),
-              ],
+            child: TopBar(
+              actions: [],
+              title: "",
             ),
           ),
-          Flexible(child: NeumorphicClock()),
           SizedBox(height: 30),
+          SizedBox(height: 60),
+          Flexible(child: NeumorphicClock()),
+          SizedBox(height: 60),
 
         ],
       ),
@@ -89,38 +58,63 @@ class _ClockFirstPageState extends State<_ClockFirstPage> {
 class NeumorphicClock extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
+    return Container(
+      width: 400,
+        height: 400,
       child: Neumorphic(
-        margin: EdgeInsets.all(14),
+        margin: EdgeInsets.all(10),
+        padding: EdgeInsets.all(10),
         style: NeumorphicStyle(
+          shadowDarkColor: Colors.blue,
+          lightSource: LightSource.topRight,
           boxShape: NeumorphicBoxShape.circle(),
         ),
-        child: Neumorphic(
-          style: NeumorphicStyle(
-            depth: 14,
-            boxShape: NeumorphicBoxShape.circle(),
-          ),
-          margin: EdgeInsets.all(20),
+        // child: Neumorphic(
+        //   style: NeumorphicStyle(
+        //     depth: 14,
+        //     boxShape: NeumorphicBoxShape.circle(),
+        //   ),
+        //   margin: EdgeInsets.all(20),
           child: Neumorphic(
+            padding: EdgeInsets.all(5),
             style: NeumorphicStyle(
-              depth: -8,
+              depth: -10,
+              // shadowDarkColor: Colors.black,
+              // shadowLightColor: Colors.red,
               boxShape: NeumorphicBoxShape.circle(),
             ),
-            margin: EdgeInsets.all(10),
 
+            child: AspectRatio(
+
+              aspectRatio: 3 / 4,
+              child: Padding(
+                padding: const EdgeInsets.all(40.0),
+                child: Image.asset(
+                  "assets/images/wheelchair_side.png",
+                  fit: BoxFit.contain,
+                ),
+              ),
+            ),
+            // margin: EdgeInsets.all(10),
+            // child: AspectRatio(
+            //   aspectRatio: 3 / 4,
+            //   child: Lottie.asset(
+            //     'assets/Lottie/chair1.json',
+            //     fit: BoxFit.fill,
+            //   ),
+            // ),
           ),
-        ),
+        // ),
       ),
     );
   }
 
   Widget _buildLine(
       {required BuildContext context,
-        required double angle,
-        required double width,
+      required double angle,
+      required double width,
       double height = 6,
-        required Color color}) {
+      required Color color}) {
     return Transform.rotate(
       angle: angle,
       child: Center(
@@ -154,4 +148,3 @@ class NeumorphicClock extends StatelessWidget {
     );
   }
 }
-
