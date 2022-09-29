@@ -7,9 +7,9 @@ import 'package:flutter/widgets.dart';
 import 'package:senso_seat/core/constants.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-class TeslaSample extends StatefulWidget {
+class TeslaSample2 extends StatefulWidget {
   @override
-  createState() => _TeslaSampleState();
+  createState() => _TeslaSample2State();
 }
 class ChipBuilderSample extends ChipBuilder {
   @override
@@ -33,7 +33,7 @@ class ChipBuilderSample extends ChipBuilder {
     ;
   }
 }
-class _TeslaSampleState extends State<TeslaSample> {
+class _TeslaSample2State extends State<TeslaSample2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -125,12 +125,9 @@ class __PageContentState extends State<_PageContent> {
       child: Column(
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          Expanded(flex: 3, child: _buildTopBar(context)),
-          Expanded(flex: 3, child: _buildTitle(context)),
-          Expanded(flex: 8, child: _buildCenterContent(context)),
-          Expanded(flex: 2 ,child: _networkContainer(Text("data",style: TextStyle(color: Colors.white),)),),
-          Expanded(flex: 1, child: SizedBox()),
-
+          _buildTopBar(context),
+          Expanded(flex: 2, child: _buildTitle(context)),
+          Expanded(flex: 5, child: _buildCenterContent(context)),
         ],
       ),
     );
@@ -142,7 +139,7 @@ class __PageContentState extends State<_PageContent> {
         Align(
           alignment: Alignment.centerLeft,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
             child: _bumpButton(
               Icon(
                 Icons.arrow_back,
@@ -152,19 +149,9 @@ class __PageContentState extends State<_PageContent> {
           ),
         ),
         Align(
-          alignment: Alignment.center,
-
-          child: Text(
-            stateOfSeat,
-            style: TextStyle(
-              color: Colors.white30,
-            ),
-          ),
-        ),
-        Align(
           alignment: Alignment.centerRight,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 24),
             child: _bumpButton(
               Icon(
                 Icons.settings,
@@ -189,8 +176,8 @@ class __PageContentState extends State<_PageContent> {
       ),
       child: NeumorphicButton(
           onPressed: () {},
-          margin: EdgeInsets.all(0),
-          padding: EdgeInsets.all(15.0),
+          margin: EdgeInsets.all(3),
+          padding: EdgeInsets.all(14.0),
           style: NeumorphicStyle(
             boxShape: NeumorphicBoxShape.circle(),
             color: Color(0xFF212528),
@@ -200,40 +187,16 @@ class __PageContentState extends State<_PageContent> {
           child: child),
     );
   }
-  Widget _networkContainer(Widget child) {
-    return Container(
-      margin: EdgeInsets.all(10),
-      width: double.infinity,
-      child: Neumorphic(
-
-        drawSurfaceAboveChild: false,
-        // style: NeumorphicStyle(
-        //   color: Color(0xFF2D3238),
-        //   depth: 8,
-        //   boxShape: NeumorphicBoxShape.roundRect(BorderRadius.all(Radius.circular(16.0))),
-        //   intensity: 0.3,
-        //   shape: NeumorphicShape.concave,
-        // ),
-        child: NeumorphicButton(
-            onPressed: () {},
-            margin: EdgeInsets.all(3),
-            padding: EdgeInsets.all(10.0),
-            style: NeumorphicStyle(
-              boxShape: NeumorphicBoxShape.roundRect(BorderRadius.all(Radius.circular(16.0))),
-              color: Color(0xFF212528),
-              depth: -5,
-              shape: NeumorphicShape.convex,
-            ),
-            child: child),
-        // child:child,
-      ),
-    );
-  }
 
   Widget _buildTitle(BuildContext context) {
     return Column(
       children: <Widget>[
-
+        Text(
+          stateOfSeat,
+          style: TextStyle(
+            color: Colors.white30,
+          ),
+        ),
         DefaultTextStyle(
           style: const TextStyle(
             fontSize: 30.0,

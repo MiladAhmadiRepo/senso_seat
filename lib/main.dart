@@ -4,7 +4,9 @@ import 'package:lottie/lottie.dart';
 import 'package:senso_seat/clock/clock_sample.dart';
 import 'package:senso_seat/home_page.dart';
 
+import 'lib/LineChartSample2.dart';
 import 'lib/testla_sample.dart';
+import 'lib/testla_sample2.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,6 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return  Scaffold(
       // body: ClockSample(),
       body: TeslaSample(),
+      // body: LineChartSample2(),
     );
   }
 }

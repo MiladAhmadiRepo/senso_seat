@@ -8,3 +8,6 @@ class constants {
   static const IconData bluetoothIconData = IconData(
       0xe800, fontFamily: _kFontFam, fontPackage: _kFontPkg);
 }
+
+const String stateOfSeat="Your State : ";
+const String normalState='It\'s Normal';
