@@ -4,95 +4,82 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:senso_seat/core/constants.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+
+import '../core/color.dart';
+import '../core/utility.dart';
 
 class TeslaSample extends StatefulWidget {
   @override
   createState() => _TeslaSampleState();
 }
-class ChipBuilderSample extends ChipBuilder {
-  @override
-  Widget build(BuildContext context, Widget child, int index, bool active) {
-    return Stack(
-      alignment: Alignment.center,
-      children:  [
-        child,
-        Positioned.fill(
-          child: Align(
-            alignment: Alignment.topRight,
-            child: Container(
-              margin: EdgeInsets.only(top: 10, right: 10),
-              padding: EdgeInsets.only(left: 4, right: 4),
-              child: Icon(Icons.access_alarm, color: Colors.redAccent),
-            ),
-          ),
-        )
-      ],
-    );
-    ;
-  }
-}
+
 class _TeslaSampleState extends State<TeslaSample> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        bottomNavigationBar: ConvexAppBar(
-          backgroundColor:Color(0xFF30353B) ,
-        // style: TabStyle.,
-          activeColor: Colors.blue,
-          items: [
-            TabItem(
-              activeIcon:  Icon(
-                Icons.accessible,
-                color: Colors.white,
-                size: 30,
-              ) ,
-              icon:   Icon(
+      bottomNavigationBar: ConvexAppBar(
+        backgroundColor: mainBackgroundColor,
+        style: TabStyle.flip,
+        // activeColor: Colors.blue,
+        top: -10,
+        items: [
+          TabItem(
+            activeIcon: Icon(
+              Icons.accessible,
+              color: Colors.white,
+              size: 30,
+            ),
+            icon: Icon(
               Icons.accessible,
               color: Colors.grey,
-            ), title: 'Home',),
-            TabItem(icon:
-            Icon(
-              Icons.add_chart_rounded,
-              color: Colors.grey,
             ),
-                activeIcon:  Icon(
-                  Icons.add_chart_rounded,
-                  color: Colors.white,
-                  size: 30,
-                ) ,
-                title: 'History'),
-            TabItem(icon:Icon(
-              Icons.settings_outlined,
-              color: Colors.grey,
-            ),
-                activeIcon:  Icon(
-                  Icons.settings_outlined,
-                  color: Colors.white,
-                  size: 30,
-                ) ,
-
-                title: 'Setting'),
-            TabItem(icon: Icon(
-              Icons.account_box_outlined,
-              color: Colors.grey,
-            ),
-                activeIcon:  Icon(
-                  Icons.account_box_outlined,
-                  color: Colors.white,
-                  size: 30,
-                ) ,
-
-                title: 'UserProfile'),
-          ],
-          onTap: (int i) => print('click index=$i'),
-        ),
+            title: 'Home',
+          ),
+          TabItem(
+              icon: Icon(
+                Icons.add_chart_rounded,
+                color: Colors.grey,
+              ),
+              activeIcon: Icon(
+                Icons.add_chart_rounded,
+                color: Colors.white,
+                size: 30,
+              ),
+              title: 'History'),
+          TabItem(
+              icon: Icon(
+                Icons.settings_outlined,
+                color: Colors.grey,
+              ),
+              activeIcon: Icon(
+                Icons.settings_outlined,
+                color: Colors.white,
+                size: 30,
+              ),
+              title: 'Setting'),
+          TabItem(
+              icon: Icon(
+                Icons.account_box_outlined,
+                color: Colors.grey,
+              ),
+              activeIcon: Icon(
+                Icons.account_box_outlined,
+                color: Colors.white,
+                size: 30,
+              ),
+              title: 'UserProfile'),
+        ],
+        onTap: (int i) => print('click index=$i'),
+      ),
       body: NeumorphicTheme(
         theme: NeumorphicThemeData(
-          baseColor: Color(0xFF30353B),
+          baseColor: mainBackgroundColor,
           intensity: 0.3,
-          accentColor: Color(0xFF0F95E6),
+          accentColor: activeColor,
           lightSource: LightSource.topLeft,
           depth: 2,
         ),
@@ -112,15 +99,13 @@ class _PageContent extends StatefulWidget {
 }
 
 class __PageContentState extends State<_PageContent> {
-
-
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(colors: [
-        Color(0xFF373C43),
-        Color(0xFF17181C),
+        mainDarkColor,
+        mainDarkGlowColor,
       ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
       child: Column(
         mainAxisSize: MainAxisSize.max,
@@ -128,9 +113,12 @@ class __PageContentState extends State<_PageContent> {
           Expanded(flex: 3, child: _buildTopBar(context)),
           Expanded(flex: 3, child: _buildTitle(context)),
           Expanded(flex: 8, child: _buildCenterContent(context)),
-          Expanded(flex: 2 ,child: _networkContainer(Text("data",style: TextStyle(color: Colors.white),)),),
+          Expanded(
+            flex: 2,
+            child: _connectionsContainer(Utility().checkBluetoothConnectivity(),
+                Utility().checkNetworkConnectivity()),
+          ),
           Expanded(flex: 1, child: SizedBox()),
-
         ],
       ),
     );
@@ -145,15 +133,14 @@ class __PageContentState extends State<_PageContent> {
             padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
             child: _bumpButton(
               Icon(
-                Icons.arrow_back,
-                color: Colors.grey,
+                Icons.menu,
+                color: greyColor,
               ),
             ),
           ),
         ),
         Align(
           alignment: Alignment.center,
-
           child: Text(
             stateOfSeat,
             style: TextStyle(
@@ -163,15 +150,20 @@ class __PageContentState extends State<_PageContent> {
         ),
         Align(
           alignment: Alignment.centerRight,
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: _bumpButton(
-              Icon(
-                Icons.settings,
-                color: Colors.grey,
+          child: _avatarButton(ClipOval(
+            child: SizedBox.fromSize(
+              size: Size.fromRadius(25), // Image radius
+              child: Image.asset(
+                pngUserProfile,
+                fit: BoxFit.fitWidth,
               ),
             ),
-          ),
+          )
+              // Icon(
+              //   Icons.settings,
+              //   color: Colors.grey,
+              // ),
+              ),
         )
       ],
     );
@@ -181,10 +173,10 @@ class __PageContentState extends State<_PageContent> {
     return Neumorphic(
       drawSurfaceAboveChild: false,
       style: NeumorphicStyle(
-        color: Color(0xFF2D3238),
+        color: mainDarkOuterColor,
         depth: 8,
         boxShape: NeumorphicBoxShape.circle(),
-        intensity: 0.3,
+        intensity: 0.5,
         shape: NeumorphicShape.concave,
       ),
       child: NeumorphicButton(
@@ -193,39 +185,45 @@ class __PageContentState extends State<_PageContent> {
           padding: EdgeInsets.all(15.0),
           style: NeumorphicStyle(
             boxShape: NeumorphicBoxShape.circle(),
-            color: Color(0xFF212528),
+            color: mainDarkInnerColor,
             depth: 0,
             shape: NeumorphicShape.convex,
           ),
           child: child),
     );
   }
-  Widget _networkContainer(Widget child) {
-    return Container(
-      margin: EdgeInsets.all(10),
-      width: double.infinity,
-      child: Neumorphic(
 
-        drawSurfaceAboveChild: false,
-        // style: NeumorphicStyle(
-        //   color: Color(0xFF2D3238),
-        //   depth: 8,
-        //   boxShape: NeumorphicBoxShape.roundRect(BorderRadius.all(Radius.circular(16.0))),
-        //   intensity: 0.3,
-        //   shape: NeumorphicShape.concave,
-        // ),
-        child: NeumorphicButton(
-            onPressed: () {},
-            margin: EdgeInsets.all(3),
-            padding: EdgeInsets.all(10.0),
-            style: NeumorphicStyle(
-              boxShape: NeumorphicBoxShape.roundRect(BorderRadius.all(Radius.circular(16.0))),
-              color: Color(0xFF212528),
-              depth: -5,
-              shape: NeumorphicShape.convex,
-            ),
-            child: child),
-        // child:child,
+  Widget _avatarButton(Widget child) {
+    return Neumorphic(
+      drawSurfaceAboveChild: false,
+      style: NeumorphicStyle(
+          color: mainDarkOuterColor,
+          depth: 8,
+          boxShape: NeumorphicBoxShape.circle(),
+          intensity: 0.5,
+          shape: NeumorphicShape.concave,
+          lightSource: LightSource.topRight),
+      child: NeumorphicButton(
+          onPressed: () {},
+          margin: EdgeInsets.all(0),
+          // padding: EdgeInsets.all(15.0),
+          style: NeumorphicStyle(
+            boxShape: NeumorphicBoxShape.circle(),
+            color: mainDarkInnerColor,
+            depth: 0,
+            shape: NeumorphicShape.convex,
+          ),
+          child: child),
+    );
+  }
+
+  Widget _connectionsContainer(Widget bluetoothWidgets, Widget networkWidgets) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [bluetoothWidgets, networkWidgets],
       ),
     );
   }
@@ -233,7 +231,6 @@ class __PageContentState extends State<_PageContent> {
   Widget _buildTitle(BuildContext context) {
     return Column(
       children: <Widget>[
-
         DefaultTextStyle(
           style: const TextStyle(
             fontSize: 30.0,
@@ -244,12 +241,9 @@ class __PageContentState extends State<_PageContent> {
             animatedTexts: [
               RotateAnimatedText(normalState),
             ],
-            onTap: () {
-              print("Tap Event");
-            },
+            onTap: () {},
           ),
         ),
-
       ],
     );
   }
@@ -257,32 +251,29 @@ class __PageContentState extends State<_PageContent> {
   Widget _buildCenterContent(BuildContext context) {
     return Stack(
       children: <Widget>[
-        Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              "297",
+        Align(
+          alignment: Alignment.topCenter,
+          child: Container(
+            // color: Colors.red,
+            child: Text(
+              changeYourPosition,
+              textAlign: TextAlign.center,
               style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 120,
-                  fontWeight: FontWeight.w200),
+                color: Colors.grey,
+                fontSize: 35,
+                fontWeight: FontWeight.w600,
+              ),
             ),
-            Text(
-              "km",
-              style: TextStyle(color: Colors.white, fontSize: 10),
-            ),
-          ],
+          ),
         ),
-
         Positioned(
-        left: 20,
+          left: 20,
+          top: 10,
           child: SizedBox(
             height: 280,
+            width: 300,
             child: Image.asset(
-              // "assets/images/tesla_cropped.png",
-              "assets/images/wheelchair_side.png",
+              pngWheelchair,
               fit: BoxFit.contain,
             ),
           ),
