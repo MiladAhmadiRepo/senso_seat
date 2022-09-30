@@ -2,6 +2,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:senso_seat/core/constants.dart';
 import 'package:senso_seat/screens/widgets/dark_app_bar.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
   import '../core/color.dart';
@@ -39,27 +40,18 @@ class _HistoryScreenState extends State<HistoryScreen> {
               children: [
                 Expanded(
                     flex: 2,
-                    child: TextButton(
-                        onPressed: () {
-                          DatePicker.showDatePicker(context,
-                              theme:DatePickerTheme(
-                                backgroundColor: mainDarkInnerColor,
-                                cancelStyle: TextStyle(color: activeColor),
-                                doneStyle: TextStyle(color: activeColor),
-                              ) ,
-                              showTitleActions: true,
-                              minTime: DateTime(2020, 3, 5),
-                              maxTime: DateTime(2022, 6, 7)
-                              , onChanged: (date) {
-                                print('change $date');
-                              }, onConfirm: (date) {
-                                print('confirm $date');
-                              }, currentTime: DateTime.now(),);
-                        },
-                        child: Text(
-                          'show date time picker ',
-                          style: TextStyle(color: Colors.blue),
-                        ))),
+                    child: Row(
+                      children: [
+                        Text(startDateString)
+                        TextButton(
+                            onPressed: () {
+                            },
+                            child: Text(
+                              'selected date',
+                              style: TextStyle(color: Colors.blue),
+                            )),
+                      ],
+                    )),
                 Expanded(
                   flex: 5,
                   child: SingleChildScrollView(
@@ -83,6 +75,9 @@ class _HistoryScreenState extends State<HistoryScreen> {
                     ),
                   ),
                 ),
+                Expanded(
+                  flex: 1,
+                    child: SizedBox())
               ],
             ),
           ),

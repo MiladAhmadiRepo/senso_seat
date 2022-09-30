@@ -40,3 +40,5 @@ const String signIntoString = 'sign into \nmanage your device & accessory';
 const String techNoteString = 'Bridging Between Health and Technology';
 const String singUpString = 'Sign Up';
 const String loginString = 'Login';
+const String startDateString = 'Start Date';
+const String endDateString = 'End Date';
