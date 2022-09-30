@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:lottie/lottie.dart';
-import 'package:senso_seat/clock/clock_sample.dart';
-import 'package:senso_seat/home_page.dart';
+import 'package:senso_seat/screens/home_screen.dart';
+import 'package:senso_seat/screens/login_screen.dart';
 
-import 'lib/LineChartSample2.dart';
-import 'lib/testla_sample.dart';
-import 'lib/testla_sample2.dart';
+import 'screens/history_screen.dart';
+import 'screens/sensor_screen.dart';
 
 void main() {
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.red,
+    ),
+  );
   runApp(const MyApp());
 }
 
@@ -37,9 +42,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
 
     return  Scaffold(
-      // body: ClockSample(),
-      body: TeslaSample(),
-      // body: LineChartSample2(),
+      // body: LoginScreen(),
+      body: SensorScreen(),
     );
   }
 }
