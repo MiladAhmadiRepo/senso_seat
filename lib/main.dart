@@ -43,7 +43,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return  Scaffold(
       // body: LoginScreen(),
-      body: SensorScreen(),
+      // body: SensorScreen(),
+      body: HistoryScreen(),
     );
   }
 }

@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:senso_seat/screens/widgets/dark_app_bar.dart';
-
-import '../core/color.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+  import '../core/color.dart';
 
 class HistoryScreen extends StatefulWidget {
   const HistoryScreen({Key? key}) : super(key: key);
@@ -35,63 +35,54 @@ class _HistoryScreenState extends State<HistoryScreen> {
         ),
         child: SafeArea(
           child: NeumorphicBackground(
-            child: Stack(
-              children: <Widget>[
-                // AspectRatio(
-                //   aspectRatio: 1.70,
-                //   child: Container(
-                //     decoration: const BoxDecoration(
-                //         borderRadius: BorderRadius.all(
-                //           Radius.circular(18),
-                //         ),
-                //         color: Color(0xff232d37)),
-                //     child: Padding(
-                //       padding: const EdgeInsets.only(
-                //           right: 18.0, left: 12.0, top: 24, bottom: 12),
-                //       child: LineChart(
-                //         showAvg ? avgData() : mainData(),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Container(
-                    width: 800,
-                    height: 400,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(18),
+            child: Column(
+              children: [
+                Expanded(
+                    flex: 2,
+                    child: TextButton(
+                        onPressed: () {
+                          DatePicker.showDatePicker(context,
+                              theme:DatePickerTheme(
+                                backgroundColor: mainDarkInnerColor,
+                                cancelStyle: TextStyle(color: activeColor),
+                                doneStyle: TextStyle(color: activeColor),
+                              ) ,
+                              showTitleActions: true,
+                              minTime: DateTime(2020, 3, 5),
+                              maxTime: DateTime(2022, 6, 7)
+                              , onChanged: (date) {
+                                print('change $date');
+                              }, onConfirm: (date) {
+                                print('confirm $date');
+                              }, currentTime: DateTime.now(),);
+                        },
+                        child: Text(
+                          'show date time picker ',
+                          style: TextStyle(color: Colors.blue),
+                        ))),
+                Expanded(
+                  flex: 5,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Container(
+                      width: 800,
+                      height: 400,
+                      decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(18),
+                          ),
+                          color: Color(0xff232d37)),
+                      child: Padding(
+                        padding: const EdgeInsets.only(
+                            right: 18.0, left: 12.0, top: 24, bottom: 12),
+                        child: LineChart(
+                          /* showAvg ? avgData() :*/
+                          mainData(),
                         ),
-                        color: Color(0xff232d37)),
-                    child: Padding(
-                      padding: const EdgeInsets.only(
-                          right: 18.0, left: 12.0, top: 24, bottom: 12),
-                      child: LineChart(
-                        /* showAvg ? avgData() :*/
-                        mainData(),
                       ),
                     ),
                   ),
                 ),
-                // SizedBox(
-                //   width: 60,
-                //   height: 34,
-                //   child: TextButton(
-                //     onPressed: () {
-                //       setState(() {
-                //         showAvg = !showAvg;
-                //       });
-                //     },
-                //     child: Text(
-                //       'avg',
-                //       style: TextStyle(
-                //           fontSize: 12,
-                //           color:
-                //           showAvg ? Colors.white.withOpacity(0.5) : Colors.white),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),

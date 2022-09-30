@@ -302,7 +302,7 @@ class __PageContentState extends State<_PageContent> {
                 colors: [
                   kPinkColor.withOpacity(0.0),
                   kPinkColor.withOpacity(0.0),
-                  activeColor.withOpacity(0.5),
+                  activeColor.withOpacity(0.2),
                   activeColor.withOpacity(0.3),
                 ],
                 stops: const [
